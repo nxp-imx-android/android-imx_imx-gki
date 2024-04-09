@@ -1,0 +1,8 @@
+Package:                     imx-gki.git
+Outgoing License:            GPL-2.0
+License File:                LICENSE
+Type of Content:             binary
+Description and comments:    GKI binaries
+Release Location:            https://github.com/nxp-imx-android/android-imx_imx-gki
+Origin:                      NXP (GPL-2.0)
+                             Generic Kernel Image (GKI) release builds (GPL-2.0) - https://source.android.com/docs/core/architecture/kernel/gki-release-builds
