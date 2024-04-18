@@ -37,7 +37,6 @@
 /system/lib/modules/btbcm.ko: /system/lib/modules/bluetooth.ko /system/lib/modules/rfkill.ko
 /system/lib/modules/btqca.ko: /system/lib/modules/bluetooth.ko /system/lib/modules/rfkill.ko
 /system/lib/modules/8021q.ko:
-/system/lib/modules/cfg80211.ko: /system/lib/modules/rfkill.ko
 /system/lib/modules/can.ko:
 /system/lib/modules/can-raw.ko: /system/lib/modules/can.ko
 /system/lib/modules/can-bcm.ko: /system/lib/modules/can.ko
@@ -47,7 +46,6 @@
 /system/lib/modules/hidp.ko: /system/lib/modules/bluetooth.ko /system/lib/modules/rfkill.ko
 /system/lib/modules/l2tp_core.ko:
 /system/lib/modules/l2tp_ppp.ko: /system/lib/modules/l2tp_core.ko /system/lib/modules/pppox.ko /system/lib/modules/ppp_generic.ko /system/lib/modules/slhc.ko
-/system/lib/modules/mac80211.ko: /system/lib/modules/cfg80211.ko /system/lib/modules/rfkill.ko /system/lib/modules/libarc4.ko
 /system/lib/modules/tipc.ko:
 /system/lib/modules/diag.ko: /system/lib/modules/tipc.ko
 /system/lib/modules/rfkill.ko:
