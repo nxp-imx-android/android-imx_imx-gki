@@ -49,6 +49,8 @@ l2tp_ppp.ko
 tipc.ko
 diag.ko
 rfkill.ko
+9pnet.ko
+9pnet_fd.ko
 6lowpan.ko
 nhc_dest.ko
 nhc_fragment.ko

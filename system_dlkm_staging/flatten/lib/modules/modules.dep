@@ -49,6 +49,8 @@
 /system/lib/modules/tipc.ko:
 /system/lib/modules/diag.ko: /system/lib/modules/tipc.ko
 /system/lib/modules/rfkill.ko:
+/system/lib/modules/9pnet.ko:
+/system/lib/modules/9pnet_fd.ko: /system/lib/modules/9pnet.ko
 /system/lib/modules/6lowpan.ko:
 /system/lib/modules/nhc_dest.ko: /system/lib/modules/6lowpan.ko
 /system/lib/modules/nhc_fragment.ko: /system/lib/modules/6lowpan.ko
