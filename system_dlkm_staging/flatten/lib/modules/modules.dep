@@ -2,7 +2,15 @@
 /system/lib/modules/kheaders.ko:
 /system/lib/modules/zsmalloc.ko:
 /system/lib/modules/libarc4.ko:
+/system/lib/modules/virtio_pci_modern_dev.ko:
+/system/lib/modules/virtio_pci.ko: /system/lib/modules/virtio_pci_modern_dev.ko
+/system/lib/modules/virtio_balloon.ko:
+/system/lib/modules/cctrng.ko:
+/system/lib/modules/virtio_console.ko:
+/system/lib/modules/virtio_blk.ko:
 /system/lib/modules/zram.ko: /system/lib/modules/zsmalloc.ko
+/system/lib/modules/open-dice.ko:
+/system/lib/modules/vcpu_stall_detector.ko:
 /system/lib/modules/macsec.ko:
 /system/lib/modules/mii.ko:
 /system/lib/modules/can-dev.ko:
@@ -26,6 +34,7 @@
 /system/lib/modules/cdc_ncm.ko: /system/lib/modules/cdc_ether.ko /system/lib/modules/usbnet.ko /system/lib/modules/mii.ko
 /system/lib/modules/aqc111.ko: /system/lib/modules/usbnet.ko /system/lib/modules/mii.ko
 /system/lib/modules/r8153_ecm.ko: /system/lib/modules/r8152.ko /system/lib/modules/cdc_ether.ko /system/lib/modules/usbnet.ko /system/lib/modules/mii.ko
+/system/lib/modules/usbmon.ko:
 /system/lib/modules/cdc-acm.ko:
 /system/lib/modules/usbserial.ko:
 /system/lib/modules/ftdi_sio.ko: /system/lib/modules/usbserial.ko
@@ -37,6 +46,7 @@
 /system/lib/modules/btbcm.ko: /system/lib/modules/bluetooth.ko /system/lib/modules/rfkill.ko
 /system/lib/modules/btqca.ko: /system/lib/modules/bluetooth.ko /system/lib/modules/rfkill.ko
 /system/lib/modules/8021q.ko:
+/system/lib/modules/vmw_vsock_virtio_transport.ko:
 /system/lib/modules/can.ko:
 /system/lib/modules/can-raw.ko: /system/lib/modules/can.ko
 /system/lib/modules/can-bcm.ko: /system/lib/modules/can.ko

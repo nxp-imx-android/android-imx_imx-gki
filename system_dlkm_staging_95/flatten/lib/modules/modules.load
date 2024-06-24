@@ -2,7 +2,15 @@ gzvm.ko
 kheaders.ko
 zsmalloc.ko
 libarc4.ko
+virtio_pci_modern_dev.ko
+virtio_pci.ko
+virtio_balloon.ko
+cctrng.ko
+virtio_console.ko
+virtio_blk.ko
 zram.ko
+open-dice.ko
+vcpu_stall_detector.ko
 macsec.ko
 mii.ko
 can-dev.ko
@@ -26,6 +34,7 @@ usbnet.ko
 cdc_ncm.ko
 aqc111.ko
 r8153_ecm.ko
+usbmon.ko
 cdc-acm.ko
 usbserial.ko
 ftdi_sio.ko
@@ -37,6 +46,7 @@ btsdio.ko
 btbcm.ko
 btqca.ko
 8021q.ko
+vmw_vsock_virtio_transport.ko
 can.ko
 can-raw.ko
 can-bcm.ko
