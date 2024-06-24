@@ -1,0 +1,29 @@
+From 0347c5d384d67af9a7a6c70c1dfbc30369b5dbf0 Mon Sep 17 00:00:00 2001
+From: Dong Aisheng <aisheng.dong@nxp.com>
+Date: Tue, 23 Jul 2019 21:32:48 +0800
+Subject: [PATCH 6/6] PM / Domains: remove no governor for states warning
+
+It's possible for a platform to define multi states but without
+using a governor.
+
+Signed-off-by: Dong Aisheng <aisheng.dong@nxp.com>
+---
+ drivers/base/power/domain.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index 1253fd78c312..9db41fe709eb 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -2126,7 +2126,7 @@ int pm_genpd_init(struct generic_pm_domain *genpd,
+ 
+ 	/* Multiple states but no governor doesn't make sense. */
+ 	if (!gov && genpd->state_count > 1)
+-		pr_warn("%s: no governor for states\n", genpd->name);
++		pr_debug("%s: no governor for states\n", genpd->name);
+ 
+ 	ret = genpd_alloc_data(genpd);
+ 	if (ret)
+-- 
+2.34.1
+

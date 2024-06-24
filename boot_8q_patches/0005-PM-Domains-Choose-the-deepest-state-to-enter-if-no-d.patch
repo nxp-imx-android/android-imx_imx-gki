@@ -1,0 +1,32 @@
+From d158e8feab0f34c169bdcc8deda356b208919c31 Mon Sep 17 00:00:00 2001
+From: Dong Aisheng <aisheng.dong@nxp.com>
+Date: Tue, 5 Mar 2019 20:28:00 +0800
+Subject: [PATCH 5/6] PM / Domains: Choose the deepest state to enter if no
+ devices using it
+
+For a domain has no working devices anymore, let's choose the deepest state
+to enter to save power. e.g. driver probe failure.
+
+Signed-off-by: Dong Aisheng <aisheng.dong@nxp.com>
+---
+ drivers/base/power/domain.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index d595dc9603cb..1253fd78c312 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -738,6 +738,10 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
+ 	if (!genpd->gov)
+ 		genpd->state_idx = 0;
+ 
++	/* Choose the deepest state if no devices using this domain */
++	if (!genpd->device_count)
++		genpd->state_idx = genpd->state_count - 1;
++
+ 	ret = _genpd_power_off(genpd, true);
+ 	if (ret) {
+ 		genpd->states[genpd->state_idx].rejected++;
+-- 
+2.34.1
+
