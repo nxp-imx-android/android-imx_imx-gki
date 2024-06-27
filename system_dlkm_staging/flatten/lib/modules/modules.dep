@@ -40,6 +40,7 @@
 /system/lib/modules/ftdi_sio.ko: /system/lib/modules/usbserial.ko
 /system/lib/modules/ptp.ko: /system/lib/modules/pps_core.ko
 /system/lib/modules/ptp_kvm.ko: /system/lib/modules/ptp.ko /system/lib/modules/pps_core.ko
+/system/lib/modules/rust_binder.ko:
 /system/lib/modules/pps_core.ko:
 /system/lib/modules/hci_uart.ko: /system/lib/modules/btqca.ko /system/lib/modules/btbcm.ko /system/lib/modules/bluetooth.ko /system/lib/modules/rfkill.ko
 /system/lib/modules/btsdio.ko: /system/lib/modules/bluetooth.ko /system/lib/modules/rfkill.ko
