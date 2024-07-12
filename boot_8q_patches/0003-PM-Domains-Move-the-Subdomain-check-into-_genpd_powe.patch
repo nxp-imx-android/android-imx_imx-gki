@@ -1,0 +1,55 @@
+From 64923278fe6fdf495d6efeffb003d50a92661eed Mon Sep 17 00:00:00 2001
+From: Dong Aisheng <aisheng.dong@nxp.com>
+Date: Tue, 5 Mar 2019 17:34:00 +0800
+Subject: [PATCH 3/6] PM / Domains: Move the Subdomain check into
+ _genpd_power_off
+
+Move the Subdomain check into _genpd_power_off, then the caller does
+not have to check it each time. This also ensures a double check
+of &genpd->sd_count before really power off domain in case it's
+increased asychronously by subdomains. This is the same behavior
+as the original genpd_power_off() does.
+
+Signed-off-by: Dong Aisheng <aisheng.dong@nxp.com>
+---
+ drivers/base/power/domain.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index 011948f02b36..f16689c23ba2 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -619,6 +619,9 @@ static int _genpd_power_off(struct generic_pm_domain *genpd, bool timed)
+ 	if (!genpd->power_off)
+ 		goto out;
+ 
++	if (atomic_read(&genpd->sd_count) > 0)
++		return -EBUSY;
++
+ 	timed = timed && genpd->gd && !genpd->states[state_idx].fwnode;
+ 	if (!timed) {
+ 		ret = genpd->power_off(genpd);
+@@ -735,10 +738,6 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
+ 	if (!genpd->gov)
+ 		genpd->state_idx = 0;
+ 
+-	/* Don't power off, if a child domain is waiting to power on. */
+-	if (atomic_read(&genpd->sd_count) > 0)
+-		return -EBUSY;
+-
+ 	ret = _genpd_power_off(genpd, true);
+ 	if (ret) {
+ 		genpd->states[genpd->state_idx].rejected++;
+@@ -1136,8 +1135,7 @@ static void genpd_sync_power_off(struct generic_pm_domain *genpd, bool use_lock,
+ 	if (!genpd_status_on(genpd) || genpd_is_always_on(genpd))
+ 		return;
+ 
+-	if (genpd->suspended_count != genpd->device_count
+-	    || atomic_read(&genpd->sd_count) > 0)
++	if (genpd->suspended_count != genpd->device_count)
+ 		return;
+ 
+ 	/* Check that the children are in their deepest (powered-off) state. */
+-- 
+2.34.1
+

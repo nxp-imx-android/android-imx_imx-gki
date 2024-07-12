@@ -1,0 +1,30 @@
+From b0c9494a8fe71784250e52b50881b6162505550d Mon Sep 17 00:00:00 2001
+From: Peng Fan <peng.fan@nxp.com>
+Date: Wed, 22 Nov 2023 09:13:49 +0800
+Subject: [PATCH] LF-10669-2 firmware: arm_scmi: mailbox: enlarge rx timeout
+
+Sometimes there are rx timeout during scmi xfer, enlarge the rx
+timeout from 30ms to 1000ms.
+
+Reviewed-by: Ye Li <ye.li@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+---
+ drivers/firmware/arm_scmi/mailbox.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/firmware/arm_scmi/mailbox.c b/drivers/firmware/arm_scmi/mailbox.c
+index 948acb4d7674..548876ed6424 100644
+--- a/drivers/firmware/arm_scmi/mailbox.c
++++ b/drivers/firmware/arm_scmi/mailbox.c
+@@ -371,7 +371,7 @@ static const struct scmi_transport_ops scmi_mailbox_ops = {
+ 
+ const struct scmi_desc scmi_mailbox_desc = {
+ 	.ops = &scmi_mailbox_ops,
+-	.max_rx_timeout_ms = 30, /* We may increase this if required */
++	.max_rx_timeout_ms = 1000, /* We may increase this if required */
+ 	.max_msg = 20, /* Limited by MBOX_TX_QUEUE_LEN */
+ 	.max_msg_size = 128,
+ };
+-- 
+2.34.1
+

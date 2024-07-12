@@ -1,0 +1,29 @@
+From 0895e77ae552083cc4ebc19024afcc9bb303fbd4 Mon Sep 17 00:00:00 2001
+From: Zhipeng Wang <zhipeng.wang_1@nxp.com>
+Date: Wed, 21 Feb 2024 20:19:19 +0900
+Subject: [PATCH 2/6] ANDROID: ABI: Update symbol list for imx
+
+1 variable symbol(s) added
+    'bool TKT340553_SW_WORKAROUND'
+
+Change-Id: I9f23ebfbb96c2fc0a205b549f0ecd991ce9e9e09
+Signed-off-by: Zhipeng Wang <zhipeng.wang_1@nxp.com>
+---
+ android/abi_gki_aarch64_imx | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/android/abi_gki_aarch64_imx b/android/abi_gki_aarch64_imx
+index 64bc234a3a59..3e7478bb216d 100644
+--- a/android/abi_gki_aarch64_imx
++++ b/android/abi_gki_aarch64_imx
+@@ -2368,6 +2368,7 @@
+   timer_delete
+   timer_delete_sync
+   timer_of_init
++  TKT340553_SW_WORKAROUND
+   _totalram_pages
+   touchscreen_parse_properties
+   touchscreen_report_pos
+-- 
+2.34.1
+

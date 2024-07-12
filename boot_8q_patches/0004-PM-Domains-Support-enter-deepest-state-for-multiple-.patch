@@ -1,0 +1,85 @@
+From cc07e54f37dd373b22d157ffec98c69f144d813f Mon Sep 17 00:00:00 2001
+From: Dong Aisheng <aisheng.dong@nxp.com>
+Date: Tue, 5 Mar 2019 19:48:24 +0800
+Subject: [PATCH 4/6] PM / Domains: Support enter deepest state for multiple
+ states domains
+
+Currently the generic power domain will power off the domain if all
+devices in it have been stopped during system suspend.
+
+It is done by checking if the domain is active in genpd_sync_power_off,
+then disable it. However, for power domains supporting multiple low power
+states, it may have already entered an intermediate low power state by
+runtime PM before system suspend and the status is already
+GPD_STATE_POWER_OFF which results in then the power domain stay at an
+intermediate low power state during system suspend.
+Then genpd_sync_power_off will keep it at the low power state instead
+of completely gate off it.
+
+Let's give the power domain a chance to switch to the deepest state in
+case it's already off but in an intermediate low power state.
+
+Signed-off-by: Dong Aisheng <aisheng.dong@nxp.com>
+---
+ drivers/base/power/domain.c | 18 +++++++++++++++++-
+ include/linux/pm_domain.h   |  1 +
+ 2 files changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index f16689c23ba2..d595dc9603cb 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -1132,7 +1132,17 @@ static void genpd_sync_power_off(struct generic_pm_domain *genpd, bool use_lock,
+ {
+ 	struct gpd_link *link;
+ 
+-	if (!genpd_status_on(genpd) || genpd_is_always_on(genpd))
++	/*
++	 * Give the power domain a chance to switch to the deepest state in
++	 * case it's already off but in an intermediate low power state.
++	 */
++	genpd->state_idx_saved = genpd->state_idx;
++
++	if (genpd_is_always_on(genpd))
++		return;
++
++	if (!genpd_status_on(genpd) &&
++	    genpd->state_idx == (genpd->state_count - 1))
+ 		return;
+ 
+ 	if (genpd->suspended_count != genpd->device_count)
+@@ -1150,6 +1160,9 @@ static void genpd_sync_power_off(struct generic_pm_domain *genpd, bool use_lock,
+ 	if (_genpd_power_off(genpd, false))
+ 		return;
+ 
++	if (genpd->status == GENPD_STATE_OFF)
++		return;
++
+ 	genpd->status = GENPD_STATE_OFF;
+ 
+ 	list_for_each_entry(link, &genpd->child_links, child_node) {
+@@ -1196,6 +1209,9 @@ static void genpd_sync_power_on(struct generic_pm_domain *genpd, bool use_lock,
+ 	}
+ 
+ 	_genpd_power_on(genpd, false);
++	/* restore save power domain state after resume */
++	genpd->state_idx = genpd->state_idx_saved;
++
+ 	genpd->status = GENPD_STATE_ON;
+ }
+ 
+diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+index 6b71fb69c349..b01ed3fb2602 100644
+--- a/include/linux/pm_domain.h
++++ b/include/linux/pm_domain.h
+@@ -199,6 +199,7 @@ struct generic_pm_domain {
+ 		};
+ 	};
+ 
++	unsigned int state_idx_saved; /* saved power state for recovery after system suspend/resume */
+ };
+ 
+ static inline struct generic_pm_domain *pd_to_genpd(struct dev_pm_domain *pd)
+-- 
+2.34.1
+
