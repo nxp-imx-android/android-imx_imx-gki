@@ -74,3 +74,21 @@
 /system/lib/modules/ieee802154_socket.ko: /system/lib/modules/ieee802154.ko
 /system/lib/modules/mac802154.ko: /system/lib/modules/ieee802154.ko
 /system/lib/modules/nfc.ko: /system/lib/modules/rfkill.ko
+/system/lib/modules/kunit-example-test.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/soc-utils-test.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/clk-gate_test.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/fat_test.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/iio-test-format.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/hid-uclogic-test.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/input_test.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/regmap-kunit.ko: /system/lib/modules/regmap-raw-ram.ko /system/lib/modules/regmap-ram.ko /system/lib/modules/kunit.ko
+/system/lib/modules/regmap-raw-ram.ko:
+/system/lib/modules/time_test.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/lib_test.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/clk_test.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/dev_addr_lists_test.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/regmap-ram.ko:
+/system/lib/modules/soc-topology-test.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/ext4-inode-test.ko: /system/lib/modules/kunit.ko
+/system/lib/modules/kunit.ko:
+/system/lib/modules/kunit-test.ko: /system/lib/modules/kunit.ko
