@@ -200,6 +200,7 @@ alias usb:v0ACEp1602d*dc*dsc*dp*ic*isc*ip*in* cdc_acm
 alias usb:v0ACEp1608d*dc*dsc*dp*ic*isc*ip*in* cdc_acm
 alias usb:v0ACEp1611d*dc*dsc*dp*ic*isc*ip*in* cdc_acm
 alias usb:v11CAp0201d*dc*dsc*dp*ic*isc*ip*in* cdc_acm
+alias usb:v1901p0006d*dc*dsc*dp*ic*isc*ip*in* cdc_acm
 alias usb:v1965p0018d*dc*dsc*dp*ic*isc*ip*in* cdc_acm
 alias usb:v22B8p7000d*dc*dsc*dp*ic*isc*ip*in* cdc_acm
 alias usb:v0803p3095d*dc*dsc*dp*ic*isc*ip*in* cdc_acm
