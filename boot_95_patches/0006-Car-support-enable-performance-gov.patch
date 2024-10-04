@@ -1,0 +1,92 @@
+From: Jiri Rezler <jiri.rezler@nxp.com>
+Date:   Wed Jun 19 08:59:27 2024 +0200
+
+Subject: [PATCH 7/7]
+    Support for Car image type has been added, enable performance gov.
+    
+Signed-off-by: Jiri Rezler <jiri.rezler@nxp.com>
+---
+
+diff --git a/android/abi_gki_aarch64_imx b/android/abi_gki_aarch64_imx
+index 3e7478bb216d9..b0cd35c162c4f 100644
+--- a/android/abi_gki_aarch64_imx
++++ b/android/abi_gki_aarch64_imx
+@@ -2747,3 +2747,5 @@
+   xsk_tx_peek_desc
+   xsk_tx_release
+   xsk_uses_need_wakeup
++  device_is_bound
++  of_update_property
+diff --git a/arch/arm64/configs/gki_defconfig b/arch/arm64/configs/gki_defconfig
+index dd0e969f4df07..72d0d12944036 100644
+--- a/arch/arm64/configs/gki_defconfig
++++ b/arch/arm64/configs/gki_defconfig
+@@ -82,8 +82,10 @@ CONFIG_ARM_PSCI_CPUIDLE=y
+ CONFIG_CPU_FREQ=y
+ CONFIG_CPU_FREQ_STAT=y
+ CONFIG_CPU_FREQ_TIMES=y
++CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y
+ CONFIG_CPU_FREQ_GOV_POWERSAVE=y
+ CONFIG_CPU_FREQ_GOV_CONSERVATIVE=y
++CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y
+ CONFIG_ARM_SCPI_CPUFREQ=y
+ CONFIG_ARM_SCMI_CPUFREQ=y
+ CONFIG_VIRTUALIZATION=y
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index 3aa56fd5ca645..ddbebd46993e8 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -393,6 +393,7 @@ bool device_is_bound(struct device *dev)
+ {
+ 	return dev->p && klist_node_attached(&dev->p->knode_driver);
+ }
++EXPORT_SYMBOL_GPL(device_is_bound);
+ 
+ static void driver_bound(struct device *dev)
+ {
+diff --git a/drivers/extcon/extcon.c b/drivers/extcon/extcon.c
+index e7f55c021e562..f3ac81e512f0c 100644
+--- a/drivers/extcon/extcon.c
++++ b/drivers/extcon/extcon.c
+@@ -180,6 +180,16 @@ static const struct __extcon_info {
+ 	},
+ 
+ 	/* Miscellaneous external connector */
++	[EXTCON_VEHICLE_RPMSG_REGISTER] = {
++		.type = EXTCON_TYPE_MISC,
++		.id = EXTCON_VEHICLE_RPMSG_REGISTER,
++		.name = "VEHICLE_RPMSG_REGISTER",
++	},
++	[EXTCON_VEHICLE_RPMSG_EVENT] = {
++		.type = EXTCON_TYPE_MISC,
++		.id = EXTCON_VEHICLE_RPMSG_EVENT,
++		.name = "VEHICLE_RPMSG_EVENT",
++	},
+ 	[EXTCON_DOCK] = {
+ 		.type = EXTCON_TYPE_MISC,
+ 		.id = EXTCON_DOCK,
+diff --git a/drivers/of/base.c b/drivers/of/base.c
+index df8d9733b0545..bbcbb6644d099 100644
+--- a/drivers/of/base.c
++++ b/drivers/of/base.c
+@@ -1713,6 +1713,7 @@ int of_update_property(struct device_node *np, struct property *newprop)
+ 
+ 	return rc;
+ }
++EXPORT_SYMBOL_GPL(of_update_property);
+ 
+ static void of_alias_add(struct alias_prop *ap, struct device_node *np,
+ 			 int id, const char *stem, int stem_len)
+diff --git a/include/linux/extcon.h b/include/linux/extcon.h
+index e596a0abcb274..2d76af871c62b 100644
+--- a/include/linux/extcon.h
++++ b/include/linux/extcon.h
+@@ -80,6 +80,8 @@
+ #define EXTCON_DISP_EDP		47	/* Embedded Display Port */
+ 
+ /* Miscellaneous external connector */
++#define EXTCON_VEHICLE_RPMSG_REGISTER  58
++#define EXTCON_VEHICLE_RPMSG_EVENT     59
+ #define EXTCON_DOCK		60
+ #define EXTCON_JIG		61
+ #define EXTCON_MECHANICAL	62
