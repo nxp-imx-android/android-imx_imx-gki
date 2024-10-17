@@ -1,0 +1,103 @@
+From 35075bcff2767164a9daf066bb27a8b19e34ef35 Mon Sep 17 00:00:00 2001
+From: Zhipeng Wang <zhipeng.wang_1@nxp.com>
+Date: Wed, 16 Oct 2024 21:41:54 +0900
+Subject: [PATCH 5/5] ANDROID: GKI: Add symbol to symbol list for imx
+
+1 function symbol(s) added
+  'int phylink_init_eee(struct phylink*, bool)'
+
+Bug: 373790928
+Change-Id: Ib9357632fd5adf5a4f2e02f2bb311633be4f9c9e
+Signed-off-by: Zhipeng Wang <zhipeng.wang_1@nxp.com>
+---
+ android/abi_gki_aarch64.stg | 10 ++++++++++
+ android/abi_gki_aarch64_imx | 10 ++++++++++
+ 2 files changed, 20 insertions(+)
+
+diff --git a/android/abi_gki_aarch64.stg b/android/abi_gki_aarch64.stg
+index 1def56c98fef..81f9207da52b 100644
+--- a/android/abi_gki_aarch64.stg
++++ b/android/abi_gki_aarch64.stg
+@@ -402132,6 +402132,15 @@ elf_symbol {
+   type_id: 0x9996cbde
+   full_name: "phylink_get_eee_err"
+ }
++elf_symbol {
++  id: 0x04ada2db
++  name: "phylink_init_eee"
++  is_defined: true
++  symbol_type: FUNCTION
++  crc: 0xec02ebe0
++  type_id: 0x982336a1
++  full_name: "phylink_init_eee"
++}
+ elf_symbol {
+   id: 0x60e18dd0
+   name: "phylink_limit_mac_speed"
+@@ -431239,6 +431248,7 @@ interface {
+   symbol_id: 0x2c092465
+   symbol_id: 0x161b2b54
+   symbol_id: 0x707a35cb
++  symbol_id: 0x04ada2db
+   symbol_id: 0x60e18dd0
+   symbol_id: 0x1391d24c
+   symbol_id: 0x5170316a
+diff --git a/android/abi_gki_aarch64_imx b/android/abi_gki_aarch64_imx
+index 031c075cd2d8..d2e8e2b9b6bf 100644
+--- a/android/abi_gki_aarch64_imx
++++ b/android/abi_gki_aarch64_imx
+@@ -122,6 +122,7 @@
+   class_find_device
+   class_register
+   class_unregister
++  cleanup_srcu_struct
+   clear_page
+   clk_bulk_disable
+   clk_bulk_enable
+@@ -148,6 +149,7 @@
+   clk_hw_get_parent_by_index
+   clk_hw_get_rate
+   clk_hw_is_enabled
++  clk_hw_is_prepared
+   clk_hw_register
+   clk_hw_register_composite
+   __clk_hw_register_divider
+@@ -1251,6 +1253,7 @@
+   __kmalloc
+   kmalloc_caches
+   kmalloc_large
++  kmalloc_size_roundup
+   kmalloc_trace
+   kmem_cache_alloc
+   kmem_cache_create
+@@ -1740,6 +1743,7 @@
+   phylink_fwnode_phy_connect
+   phylink_generic_validate
+   phylink_get_eee_err
++  phylink_init_eee
+   phylink_limit_mac_speed
+   phylink_mii_c22_pcs_an_restart
+   phylink_mii_c22_pcs_config
+@@ -2175,6 +2179,8 @@
+   set_user_nice
+   sg_alloc_table
+   sg_alloc_table_from_pages_segment
++  sg_copy_from_buffer
++  sg_copy_to_buffer
+   sget_dev
+   sg_free_table
+   sg_init_one
+@@ -2377,6 +2383,10 @@
+   spi_sync
+   spi_unregister_controller
+   sprintf
++  srcu_init_notifier_head
++  srcu_notifier_call_chain
++  srcu_notifier_chain_register
++  srcu_notifier_chain_unregister
+   sscanf
+   __stack_chk_fail
+   static_key_count
+-- 
+2.34.1
+
