@@ -1,27 +1,31 @@
 From: Jiri Rezler <jiri.rezler@nxp.com>
-Date:   Wed Jun 19 08:59:27 2024 +0200
+Date:   Fri Oct 4 08:32:00 2024 +0200
 
-Subject: [PATCH 7/7]
+Subject: [PATCH 6/6]
     Support for Car image type has been added, enable performance gov.
     
 Signed-off-by: Jiri Rezler <jiri.rezler@nxp.com>
 ---
 
 diff --git a/android/abi_gki_aarch64_imx b/android/abi_gki_aarch64_imx
-index 3e7478bb216d9..b0cd35c162c4f 100644
+index 9acfa1379495..2eba4178cda7 100644
 --- a/android/abi_gki_aarch64_imx
 +++ b/android/abi_gki_aarch64_imx
-@@ -2747,3 +2747,5 @@
+@@ -2785,3 +2785,9 @@
    xsk_tx_peek_desc
    xsk_tx_release
    xsk_uses_need_wakeup
 +  device_is_bound
 +  of_update_property
++  media_entity_get_fwnode_pad
++  v4l2_ctrl_type_op_equal
++  v4l2_ctrl_type_op_init
++  v4l2_ctrl_type_op_validate
 diff --git a/arch/arm64/configs/gki_defconfig b/arch/arm64/configs/gki_defconfig
-index dd0e969f4df07..72d0d12944036 100644
+index 6aafdc980523..1474491ca049 100644
 --- a/arch/arm64/configs/gki_defconfig
 +++ b/arch/arm64/configs/gki_defconfig
-@@ -82,8 +82,10 @@ CONFIG_ARM_PSCI_CPUIDLE=y
+@@ -83,8 +83,10 @@ CONFIG_ARM_PSCI_CPUIDLE=y
  CONFIG_CPU_FREQ=y
  CONFIG_CPU_FREQ_STAT=y
  CONFIG_CPU_FREQ_TIMES=y
@@ -33,7 +37,7 @@ index dd0e969f4df07..72d0d12944036 100644
  CONFIG_ARM_SCMI_CPUFREQ=y
  CONFIG_VIRTUALIZATION=y
 diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index 3aa56fd5ca645..ddbebd46993e8 100644
+index 3aa56fd5ca64..ddbebd46993e 100644
 --- a/drivers/base/dd.c
 +++ b/drivers/base/dd.c
 @@ -393,6 +393,7 @@ bool device_is_bound(struct device *dev)
@@ -45,7 +49,7 @@ index 3aa56fd5ca645..ddbebd46993e8 100644
  static void driver_bound(struct device *dev)
  {
 diff --git a/drivers/extcon/extcon.c b/drivers/extcon/extcon.c
-index e7f55c021e562..f3ac81e512f0c 100644
+index e7f55c021e56..f3ac81e512f0 100644
 --- a/drivers/extcon/extcon.c
 +++ b/drivers/extcon/extcon.c
 @@ -180,6 +180,16 @@ static const struct __extcon_info {
@@ -66,7 +70,7 @@ index e7f55c021e562..f3ac81e512f0c 100644
  		.type = EXTCON_TYPE_MISC,
  		.id = EXTCON_DOCK,
 diff --git a/drivers/of/base.c b/drivers/of/base.c
-index df8d9733b0545..bbcbb6644d099 100644
+index df8d9733b054..bbcbb6644d09 100644
 --- a/drivers/of/base.c
 +++ b/drivers/of/base.c
 @@ -1713,6 +1713,7 @@ int of_update_property(struct device_node *np, struct property *newprop)
@@ -78,7 +82,7 @@ index df8d9733b0545..bbcbb6644d099 100644
  static void of_alias_add(struct alias_prop *ap, struct device_node *np,
  			 int id, const char *stem, int stem_len)
 diff --git a/include/linux/extcon.h b/include/linux/extcon.h
-index e596a0abcb274..2d76af871c62b 100644
+index e596a0abcb27..2d76af871c62 100644
 --- a/include/linux/extcon.h
 +++ b/include/linux/extcon.h
 @@ -80,6 +80,8 @@
