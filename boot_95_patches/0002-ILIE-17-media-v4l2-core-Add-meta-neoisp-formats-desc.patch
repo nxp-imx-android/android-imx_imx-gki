@@ -1,7 +1,7 @@
-From 1fd66c6c4a55b51544e0fb671792d655570c864e Mon Sep 17 00:00:00 2001
+From 6ad06b8e0f37c7f47c4331f20a6da5a706614042 Mon Sep 17 00:00:00 2001
 From: Julien Vuillaumier <julien.vuillaumier@nxp.com>
 Date: Thu, 4 Jan 2024 17:24:26 +0100
-Subject: [PATCH 3/4] ILIE-17: media: v4l2-core: Add meta neoisp formats
+Subject: [PATCH 2/3] ILIE-17: media: v4l2-core: Add meta neoisp formats
  description
 
 A warning is emitted when meta neoisp formats description is requested,
@@ -16,7 +16,7 @@ Acked-by: Jason Liu <jason.hui.liu@nxp.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
-index f4d9d6279094..df129fec4c0e 100644
+index f4d9d62790940..df129fec4c0e3 100644
 --- a/drivers/media/v4l2-core/v4l2-ioctl.c
 +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
 @@ -1445,6 +1445,8 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)

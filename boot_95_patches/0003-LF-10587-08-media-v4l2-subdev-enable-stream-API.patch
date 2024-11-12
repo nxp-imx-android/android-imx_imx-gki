@@ -1,7 +1,7 @@
-From 9a8b5266b0ffe2c210fca44106b2476b1acc8f0d Mon Sep 17 00:00:00 2001
+From bf1a3498b5fe44d700b863897a9b070dc0ea1904 Mon Sep 17 00:00:00 2001
 From: "Guoniu.zhou" <guoniu.zhou@nxp.com>
 Date: Thu, 16 Nov 2023 15:53:10 +0800
-Subject: [PATCH 4/4] LF-10587-08: media: v4l2-subdev: enable stream API
+Subject: [PATCH 3/3] LF-10587-08: media: v4l2-subdev: enable stream API
 
 Enable stream API since it's an experimental feature and need to
 enable explicitly.
@@ -13,7 +13,7 @@ Reviewed-by: Robby Cai <robby.cai@nxp.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/media/v4l2-core/v4l2-subdev.c b/drivers/media/v4l2-core/v4l2-subdev.c
-index 31752c06d1f0..2cb86979efb8 100644
+index a32ef739eb449..32f7bf7c71d50 100644
 --- a/drivers/media/v4l2-core/v4l2-subdev.c
 +++ b/drivers/media/v4l2-core/v4l2-subdev.c
 @@ -31,7 +31,7 @@
